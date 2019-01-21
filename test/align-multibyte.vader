@@ -1,0 +1,26 @@
+Given beancount:
+  2012-12-12 balance Assets:LongLongβAccount 50.00
+  2012-12-12 balance Assets:Cashβ 50.00
+  2012-12-12 balance Assets:Cashβ -50.00
+  2012-12-12 balance Assets:Cashβ +50.00
+      metadata: 50
+      Assets:Cαsh  50
+      Assets:Cαsh  50.00
+      ! Assets:Cαsh  50.00
+      Assets:Cαsh         50.00
+      Assets:Cαsh         50.00 USD
+
+Execute (align with multi-byte characters):
+  %AlignCommodity
+
+Expect beancount:
+  2012-12-12 balance Assets:LongLongβAccount     50.00
+  2012-12-12 balance Assets:Cashβ                50.00
+  2012-12-12 balance Assets:Cashβ               -50.00
+  2012-12-12 balance Assets:Cashβ               +50.00
+      metadata: 50
+      Assets:Cαsh                                50
+      Assets:Cαsh                                50.00
+      ! Assets:Cαsh                              50.00
+      Assets:Cαsh                                50.00
+      Assets:Cαsh                                50.00 USD

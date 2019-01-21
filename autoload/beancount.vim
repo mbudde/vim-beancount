@@ -25,10 +25,10 @@ function! beancount#align_commodity(line1, line2) abort
         "    by the 'balance' keyword and the account.
         "  - A price directive, i.e., the line starts with a date followed by
         "    the 'price' keyword and a currency.
-        let l:end_account = matchend(l:line, '\v' .
-            \ '^[\-/[:digit:]]+\s+balance\s+([A-Z][A-Za-z0-9\-]+)(:[A-Z0-9][A-Za-z0-9\-]*)+ ' .
+        let l:end_account = matchend(l:line, '^\v' .
+            \ '^[\-/[:digit:]]+\s+balance\s+([[:upper:]][[:upper:][:lower:][:digit:]\-]+)(:[[:upper:][:digit:]][[:upper:][:lower:][:digit:]\-]*)+ ' .
             \ '|^[\-/[:digit:]]+\s+price\s+\S+ ' .
-            \ '|^\s+([!&#?%PSTCURM]\s+)?([A-Z][A-Za-z0-9\-]+)(:[A-Z0-9][A-Za-z0-9\-]*)+ '
+            \ '|^\s+([!&#?%PSTCURM]\s+)?([[:upper:]][[:upper:][:lower:][:digit:]\-]+)(:[[:upper:][:digit:]][[:upper:][:lower:][:digit:]\-]*)+ '
             \ )
         if l:end_account < 0
             continue
@@ -39,12 +39,12 @@ function! beancount#align_commodity(line1, line2) abort
 
         " Look for a minus sign and a number (possibly containing commas) and
         " align on the next column.
-        let l:separator = matchend(l:line, '^\v([-+])?[,[:digit:]]+', l:begin_number) + 1
+        let l:separator = matchend(l:line, '^\v([-+])?[,[:digit:]]+', l:begin_number)
         if l:separator < 0 | continue | endif
         let l:has_spaces = l:begin_number - l:end_account
-        let l:need_spaces = g:beancount_separator_col - l:separator + l:has_spaces
+        let l:need_spaces = g:beancount_separator_col - strdisplaywidth(l:line[0 : l:separator - 1]) - 1 + l:has_spaces
         if l:need_spaces < 0 | continue | endif
-        call setline(l:current_line, l:line[0 : l:end_account - 1] . repeat(' ', l:need_spaces) . l:line[ l:begin_number : -1])
+        call setline(l:current_line, l:line[0 : l:end_account - 1] . repeat(' ', l:need_spaces) . l:line[l:begin_number : -1])
         if l:current_line == l:cursor_line && l:cursor_col >= l:end_account
             " Adjust cursor position for continuity.
             call cursor(0, l:cursor_col + l:need_spaces - l:has_spaces)
