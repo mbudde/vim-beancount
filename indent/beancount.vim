@@ -14,7 +14,7 @@ function! s:IsDirective(str)
 endfunction
 
 function! s:IsPosting(str)
-    return a:str =~# '\v^\s*[A-Z]\w+:'
+    return a:str =~# '\v^\s*[[:upper:]][[:upper:][:lower:][:digit:]\-]+:'
 endfunction
 
 function! s:IsMetadata(str)

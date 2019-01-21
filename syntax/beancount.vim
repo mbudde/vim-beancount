@@ -16,9 +16,9 @@ syn match beanAmount "\v[-+]?[[:digit:].,]+" nextgroup=beanCurrency contained
             \ skipwhite
 syn match beanCurrency "\v\w+" contained
 " Account name: alphanumeric with at least one colon.
-syn match beanAccount "\v[[:alnum:]]+:[-[:alnum:]:]+" contained
-syn match beanTag "\v#[-[:alnum:]]+" contained
-syn match beanLink "\v\^\S+" contained
+syn match beanAccount "\v[[:upper:]][[:upper:][:lower:][:digit:]\-]*(:[[:upper:][:digit:]][[:upper:][:lower:][:digit:]\-]*)+" contained
+syn match beanTag "\v#[A-Za-z0-9\-_/.]+" contained
+syn match beanLink "\v\^[A-Za-z0-9\-_/.]+" contained
 " We must require a space after the flag because you can have flags per
 " transaction leg, and the letter-based flags might get confused with the
 " start of an account name.
