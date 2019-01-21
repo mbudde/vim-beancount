@@ -63,7 +63,7 @@ syn region beanPost start="^\v\C\s+(([*!&#?%PSTCURM]\s+)?[A-Z])@=" end="$"
             \ contains=beanFlag,beanAccount,beanAmount,beanComment,beanCost,beanPrice
 syn region beanMeta matchgroup=beanTag start="^\v\C\s+[a-z][-_a-zA-Z0-9]*:(\s|$)@=" end="$"
 
-syn region beanCost start="{" end="}" contains=beanAmount contained
+syn region beanCost start="{{\?" end="}}\?" contains=beanAmount contained
 syn match beanPrice "\V@@\?" nextgroup=beanAmount contained
 
 syn region beanHashHeaderFold
