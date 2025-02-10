@@ -26,7 +26,7 @@ syn match beanFlag "\v[*!&#?%PSTCURM]\s\@=" contained
 
 " Most directives start with a date.
 syn match beanDate "^\v\d{4}[-/]\d{2}[-/]\d{2}" skipwhite
-            \ nextgroup=beanOpen,beanTxn,beanClose,beanCommodity,beanNote,beanBalance,beanEvent,beanPad,beanPrice
+            \ nextgroup=beanOpen,beanTxn,beanClose,beanCommodity,beanNote,beanBalance,beanEvent,beanPad,beanPrice,beanCustom
 " Options and events have two string arguments. The first, we are matching as
 " beanOptionTitle and the second as a regular string.
 syn region beanOption matchgroup=beanKeyword start="^option" end="$"
@@ -55,6 +55,8 @@ syn region beanPushTag matchgroup=beanKeyword start="\v^(push|pop)tag" end="$"
             \ keepend contains=beanTag
 syn region beanPad matchgroup=beanKeyword start="pad" end="$" contained
             \ keepend contains=beanAccount,beanComment
+syn region beanCustom matchgroup=beanKeyword start="custom" end="$" contained
+            \ keepend contains=beanString,beanComment
 
 syn region beanTxn matchgroup=beanKeyword start="\v\s+(txn|[*!&#?%PSTCURM])" skip="^\s"
             \ end="^" keepend contained fold
